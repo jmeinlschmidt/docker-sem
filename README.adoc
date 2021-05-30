@@ -1,1 +1,32 @@
-= docker-sem
+= Ročníková práce
+
+
+Monorepo pro práci *Serverové služby*, která (ne)vznikala na link:https://github.com/sps-cl[@sps-cl] ve třetím ročníku (2017/18) jako má ročníková práce.
+For legal reasons, není součástí repozitáře celá práce, nýbrž jen praktická část a stručné shrnutí.
+
+
+== 📃 Licence
+
+Ve smyslu zákona č. 121/2000 Sb., o právu autorském, o právech souvisejících s právem
+autorským, ve znění pozdějších předpisů (dále jen autorský zákon) jsou práva k maturitním
+nebo ročníkovým pracím následující:
+
+* Zadavatel má výhradní práva k využití práce, a to včetně komerčních účelů.
+* Autor práce bez svolení zadavatele nesmí využít práci ke komerčním účelům.
+* Škola má právo využít práci k nekomerčním a výukovým účelům i bez svolení zadavatele a
+autora práce.
+
+
+== 📋 Anotace
+
+Tato práce se zabývá praktickým využitím paravirtualizace s využitím služby Docker
+v serverovém prostředí.
+V rámci ročníkové práce v oboru Informačních technologií jsem navrhl
+vlastní systém se jménem DockerControl, sloužící pro dynamické řízení virtuálních instancí
+napříč dostupnými fyzickými počítači, a to s pomocí vlastního API rozhraní nebo navržené
+webové aplikace ve frameworku verze Angular 5.
+
+
+== 📚 Dokumentace
+
+TBD
