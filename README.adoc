@@ -3,6 +3,7 @@
 
 Monorepo pro práci *Serverové služby*, která (ne)vznikala na link:https://github.com/sps-cl[@sps-cl] ve třetím ročníku (2017/18) jako má ročníková práce.
 For legal reasons, není součástí repozitáře celá práce, nýbrž jen praktická část a stručné shrnutí.
+Pro její pochopení a případné navázání to jistě stačí.
 
 
 == 📃 Licence
@@ -44,12 +45,29 @@ image::./media/architecture-diagram.png[width=60%]
 
 === Uživatelské rozhrání
 
-TODO
-
 .Ukázka uživatelského rozhraní
-image::./media/user-interface.jpg[width=60%]
+image::./media/user-interface.png[width=60%]
 
 
 === Jak začít
 
-TODO
+Je potřeba npm, nodejs a Docker.
+Spusťte jednotlivé projekty -- může běžet i v rámci jednoho stroje.
+Worker instance musí poskytovat požadované API (viz implementovaný worker server).
+Daemon instance je vyžadována právě jedna.
+
+Konfigurace:
+
+* link:./dockercontrol-app/[dockercontrol-app]: V souboru `src/environments/environment.ts` nastavte API URL na instanci daemon serveru.
+* link:./dockercontrol-daemonserver[dockercontrol-daemonserver]: V poli `machines` je potřeba registrovat všechny požadované worker instance včetně portů, na kterých naslouchá jejich API.
+* link:./dockercontrol-workerserver[dockercontrol-workerserver]: V objektu `config` nastavte port na kterém bude naslouchat TCP server pro ovládání worker instace.
+
+
+== 🏆 Závěr
+
+Práce dává minimalistický a přímočarý základ pro pochopení dynamické správy virtuálních instancí a dává prostor pro pokračování.
+Jako ideální pokračování se jeví například implementace load balancing principů, které by studenta vedly k základnímu pochopení této oblasti.
+Svým řešením nabízí transparentní a jednoduchý pohled na komplikovanou problematiku, pracuje s moderními nástroji a je velmi snadno provozovatelná.
+
+Úspěšné pokračovatele této práce rád pozvu na pivo.footnote:[K zveřejnění této práce mě navedl Silák, kterého tímto srdečně zdravím a těším se, až usedneme k příštímu pivu.]
+
