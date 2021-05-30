@@ -29,7 +29,16 @@ webové aplikace ve frameworku verze Angular 5.
 
 == 📚 Dokumentace
 
-TBD
+Práce je primárně postavena na ovládání Docker API.
+Ukazuje možnosti správy instancí (vytváření/ukončování), monitoring (prostředky, health check) a poskytuje rozhraní pro koncového uživatele.
 
-.TODO
-image::./media/architecture-diagram.png[]
+Dělí se na tři samostatné balíčky, propojené vlastním Rest API:
+
+* link:./dockercontrol-app/[dockercontrol-app]: Uživatelské rozhraní pro monitoring a ovládání.
+* link:./dockercontrol-daemonserver[dockercontrol-daemonserver]: Proxy server sloužící jako hypervizor pro instance jednotlivých workerů a zároveň jako webový server pro poskytování _dockercontrol-app_.
+* link:./dockercontrol-workerserver[dockercontrol-workerserver]: Worker server určený pro vykonávání samotné práce.
+
+.Ukázka architektury
+image::./media/architecture-diagram.png[width=60%]
+
+_TODO: User interface, jak zprovoznit_
