@@ -30,3 +30,6 @@ webové aplikace ve frameworku verze Angular 5.
 == 📚 Dokumentace
 
 TBD
+
+.TODO
+image::./media/architecture-diagram.png[]
