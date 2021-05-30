@@ -41,4 +41,15 @@ Dělí se na tři samostatné balíčky, propojené vlastním Rest API:
 .Ukázka architektury
 image::./media/architecture-diagram.png[width=60%]
 
-_TODO: User interface, jak zprovoznit_
+
+=== Uživatelské rozhrání
+
+TODO
+
+.Ukázka uživatelského rozhraní
+image::./media/user-interface.jpg[width=60%]
+
+
+=== Jak začít
+
+TODO
