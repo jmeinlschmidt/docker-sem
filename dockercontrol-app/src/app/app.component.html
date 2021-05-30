@@ -1,0 +1,141 @@
+<main *ngIf='isDataLoaded'>
+    <section class='controls'>
+        <div class='controls__container'>
+            <div class='controls__section controls__section--left'>
+                <h4 class='title title--small'>Control panel</h4>
+                <h3 class='title title--big'>Create a new container</h3>
+
+                <form [formGroup]='createContainerForm' (ngSubmit)='createContainer(createContainerForm.value, createContainerForm.valid)'>
+                    <div class='row'>
+                        <div class='row__item row__item--label'>
+                            <p class='text text__label'>Select a machine</p>
+                        </div>
+                        <div class='row__item row__item--input'>
+                            <select class='form form__select' formControlName='machine' [ngModel]='selectedMachine' (ngModelChange)="selectMachine($event)">
+                                <option *ngFor='let machineHash of machineHashes' [value]='machineHash'>{{machineHash}}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class='row'>
+                        <div class='row__item row__item--label'>
+                            <p class='text text__label'>Select container image</p>
+                        </div>
+                        <div class='row__item row__item--input'>
+                            <select class='form form__select' formControlName='image'>
+                                <option *ngFor='let image of availableImages' [value]='image'>{{image}}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class='row'>
+                        <div class='row__item row__item--label'>
+                            <p class='text text__label'>Memory limit</p>
+                        </div>
+                        <div class='row__item row__item--input'>
+                            <input type='number' class='form form__text' placeholder='max {{ selectMachineFreeRam }}mb' formControlName='ramLimit' />
+                        </div>
+                    </div>
+
+                    <button class='btn btn--success' type='submit'>Create</button>
+                </form>
+            </div>
+
+            <div class='controls__section controls__section--right'>
+                <div class='card-content'>
+                    <h4 class='title title--small'>Control panel</h4>
+                    <h3 class='title title--big'>Kill a container</h3>
+
+                    <form [formGroup]='killContainerForm' (ngSubmit)='killContainer(killContainerForm.value.hash, killContainerForm.valid)'>
+                        <div class='row'>
+                            <div class='row__item row__item--label'>
+                                <p class='text text__label'>Container ID</p>
+                            </div>
+                            <div class='row__item row__item--input'>
+                                <input type='text' class='form form__text' formControlName='hash' />
+                            </div>
+                        </div>
+                        
+                        <button class='btn btn--danger' type='submit'>Kill</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class='diagram'>
+        <!-- Daemon machine -->
+        <div class='row'>
+            <div class='diagram__machine row__item--centered '>
+                <div class='diagram__container'>
+                    <div class='diagram__header diagram__header--orange'>
+                        <i class='diagram__icon diagram__icon--big'>content_copy</i>
+                    </div>
+                    <div class='diagram__content'>
+                        <h4 class='title title--small'>Machine hash</h4>
+                        <h3 class='title title--big'>#sd19s4</h3>
+                    </div>
+                    <div class='diagram__additional'>
+                        <div class='diagram__info'>
+                            <i class='diagram__icon diagram__icon--small'>computer</i> Machine IP - {{ machineDaemon.ip }}
+                        </div>
+                        <div class='diagram__info'>
+                            <i class='diagram__icon diagram__icon--small'>av_timer</i> DockerControl Port - {{ machineDaemon.dockerControlPort }}
+                        </div>
+                        <div class='diagram__info'>
+                            <i class='diagram__icon diagram__icon--small'>memory</i> RAM - {{ (machineDaemon.stats.ramCurrent/1000000).toFixed(2) }} / {{ (machineDaemon.stats.ramLimit/1000000).toFixed(2) }}mb
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class='line line--center'></div>
+
+        <!-- Machines pool -->
+        <div class='row row--bordered'>
+            <div class='diagram__machine row__item' *ngFor='let machine of runningWorkers'>
+                <div class='diagram__container'>
+                    <div class='diagram__header diagram__header--gray'>
+                        <i class='diagram__icon diagram__icon--big'>build</i>
+                    </div>
+                    <div class='diagram__content'>
+                        <h4 class='title title--small'>Machine hash</h4>
+                        <h3 class='title title--big'>#{{ machine.hash }}</h3>
+                    </div>
+                    <div class='diagram__additional'>
+                        <div class='diagram__info'>
+                            <i class='diagram__icon diagram__icon--small'>computer</i> Machine IP - {{ machine.ip }}
+                        </div>
+                        <div class='diagram__info'>
+                            <i class='diagram__icon diagram__icon--small'>av_timer</i> DockerControl Port - {{ machine.dockerControlPort }}
+                        </div>
+                        <div class='diagram__info'>
+                            <i class='diagram__icon diagram__icon--small'>memory</i> RAM - {{ (machine.stats.ramCurrent/1000000).toFixed(2) }} / {{ (machine.stats.ramLimit/1000000).toFixed(2) }}mb
+                        </div>
+                    </div>
+                    <div class='diagram__additional' *ngFor='let container of machine.containers'>
+                        <div class='diagram__info'>
+                            <i class='diagram__icon diagram__icon--small'>computer</i> Container IP - {{ machine.ip }}:{{ container.port }}
+                        </div>
+                        <div class='diagram__info'>
+                            <i class='diagram__icon diagram__icon--small'>assignment</i> Container Hash - {{ container.hash }}
+                        </div>
+                        <div class='diagram__info'>
+                                <i class='diagram__icon diagram__icon--small'>image</i> Container Image - {{ container.image }}
+                            </div>
+                        <div class='diagram__info'>
+                            <i class='diagram__icon diagram__icon--small'>memory</i> RAM - {{ (container.stats.ramCurrent/1000000).toFixed(2) }} / {{ (container.stats.ramLimit/1000000).toFixed(2) }}mb
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf='noWorkers'>Worker pool is empty</div>
+        </div>
+    </section>
+</main>
+
+<main *ngIf='!isDataLoaded'>
+    Loading data from DockerControl...
+</main>
